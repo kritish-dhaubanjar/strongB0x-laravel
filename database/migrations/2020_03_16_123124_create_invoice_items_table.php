@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBillItemsTable extends Migration
+class CreateInvoiceItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateBillItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('bill_items', function (Blueprint $table) {
+        Schema::create('invoice_items', function (Blueprint $table) {
             $table->id();
-            $table->integer('bill_id');
+            $table->integer('invoice_id');
             $table->integer('item_id')->nullable();
             $table->double('quantity', 15, 2);
             $table->double('price', 15, 2);
@@ -34,6 +34,6 @@ class CreateBillItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bill_items');
+        Schema::dropIfExists('invoice_items');
     }
 }

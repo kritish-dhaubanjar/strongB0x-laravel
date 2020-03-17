@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBillsTable extends Migration
+class CreateInvoicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,20 @@ class CreateBillsTable extends Migration
      */
     public function up()
     {
-        Schema::create('bills', function (Blueprint $table) {
+        Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->string('bill_number');
+            $table->string('invoice_number');
             $table->string('order_number')->nullable();
-            $table->enum('status', ['received', 'partial', 'paid']);
-            $table->dateTime('billed_at');
+            $table->enum('status', ['sent', 'partial', 'paid']);
+            $table->dateTime('invoiced_at');
             $table->dateTime('due_at');
             $table->double('amount', 15, 2);
             $table->double('tax_id')->nullable();
             $table->integer('category_id');
-            $table->integer('vendor_id');
+            $table->integer('customer_id');
             $table->text('notes')->nullable();
             $table->softDeletes();
             $table->timestamps();
-            // $table->dateTime('deleted_at')->nullable();
-            // $table->dateTime('created_at')->nullable();
-            // $table->dateTime('updated_at')->nullable();
         });
     }
 
@@ -40,6 +37,6 @@ class CreateBillsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bills');
+        Schema::dropIfExists('invoices');
     }
 }

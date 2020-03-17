@@ -23,7 +23,6 @@ class CreateItemsTable extends Migration
             $table->integer('unit_id')->nullable();
             $table->integer('category_id')->nullable();
             $table->integer('tax_id')->nullable();
-            $table->integer('brand_id')->nullable();
             $table->boolean('enabled')->default(1);
             $table->softDeletes();
             $table->timestamps();

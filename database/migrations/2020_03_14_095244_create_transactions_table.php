@@ -19,6 +19,7 @@ class CreateTransactionsTable extends Migration
             $table->dateTime('paid_at');
             $table->double('amount', 15, 2);
             $table->integer('account_id');
+            $table->integer('document_id')->nullable();
             $table->integer('contact_id')->nullable();
             $table->integer('category_id')->default(1);
             $table->text('description')->nullable();

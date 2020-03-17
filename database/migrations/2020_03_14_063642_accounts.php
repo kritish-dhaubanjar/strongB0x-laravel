@@ -25,6 +25,8 @@ class Accounts extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+
+        DB::table('accounts')->insert(['name'=>'Cash']);
     }
 
     /**

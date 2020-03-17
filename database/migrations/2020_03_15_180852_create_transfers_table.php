@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTaxesTable extends Migration
+class CreateTransfersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,11 @@ class CreateTaxesTable extends Migration
      */
     public function up()
     {
-        Schema::create('taxes', function (Blueprint $table) {
+        Schema::create('transfers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->double('rate', 15, 2);
-            $table->boolean('enabled')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });
-
-        DB::table('taxes')->insert(['name'=>'VAT', 'rate'=>'13.00']);
-        DB::table('taxes')->insert(['name'=>'Sales Tax', 'rate'=>'9.00']);
     }
 
     /**
@@ -33,6 +27,6 @@ class CreateTaxesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('taxes');
+        Schema::dropIfExists('transfers');
     }
 }

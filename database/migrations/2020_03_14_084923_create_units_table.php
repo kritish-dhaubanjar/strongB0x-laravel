@@ -20,6 +20,12 @@ class CreateUnitsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+
+        DB::table('units')->insert(['name'=>'kg']);
+        DB::table('units')->insert(['name'=>'g']);
+        DB::table('units')->insert(['name'=>'mL']);
+        DB::table('units')->insert(['name'=>'L']);
+        DB::table('units')->insert(['name'=>'doz']);
     }
 
     /**
