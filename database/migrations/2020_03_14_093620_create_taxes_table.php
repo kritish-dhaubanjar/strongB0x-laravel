@@ -22,8 +22,8 @@ class CreateTaxesTable extends Migration
             $table->timestamps();
         });
 
-        DB::table('taxes')->insert(['name'=>'VAT', 'rate'=>'13.00']);
-        DB::table('taxes')->insert(['name'=>'Sales Tax', 'rate'=>'9.00']);
+        DB::table('taxes')->insert(['name'=>'VAT (13%)', 'rate'=>'13.00']);
+        DB::table('taxes')->insert(['name'=>'Sales Tax (9%)', 'rate'=>'9.00']);
     }
 
     /**

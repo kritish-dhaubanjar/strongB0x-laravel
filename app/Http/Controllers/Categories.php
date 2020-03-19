@@ -18,6 +18,14 @@ class Categories extends Controller
         return new CategoryResource(Category::findOrFail($id));
     }
 
+    public function income(){
+        return CategoryResource::collection(Category::where('type', 'income')->get());
+    }
+
+    public function expense(){
+        return CategoryResource::collection(Category::where('type', 'expense')->get());
+    }
+
     public function store(Request $request)
     {
         $request->validate([

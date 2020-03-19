@@ -14,4 +14,12 @@ class Tax extends Model
     public function items(){
     	return $this->hasMany('App\Models\Item');
     }
+
+    public function invoices(){
+    	return $this->hasMany('App\Models\Sales\Invoice');
+    }
+
+    public function bills(){
+    	return $this->hasMany('App\Models\Purchases\Bill');
+    }
 }

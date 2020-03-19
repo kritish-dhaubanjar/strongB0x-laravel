@@ -4,12 +4,13 @@ namespace App\Models\Purchases;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class Bill extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['bill_number', 'order_number', 'status', 'billed_at', 'due_at', 'amount', 'tax_id', 'category_id', 'vendor_id', 'notes'];
+    protected $fillable = ['bill_number', 'order_number', 'status', 'billed_year', 'billed_month','billed_day', 'due_year', 'due_month', 'due_day', 'amount', 'tax_id', 'category_id', 'vendor_id', 'notes'];
 
     public function items(){
         return $this->hasMany('App\Models\Purchases\BillItem');

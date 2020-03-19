@@ -25,7 +25,7 @@ class TransferResource extends JsonResource
 
         return [
             'id'=>$this->id,
-            'paid_at'=>$this->transactions[0]->paid_at,
+            'paid_at'=>$this->transactions[0]->paid_year.'-'.$this->transactions[0]->paid_month.'-'.$this->transactions[0]->paid_day,
             'amount' => $this->transactions[0]->amount,
             'income_account_id' => $income_id,
             'income' => Account::findOrFail($income_id)->name,

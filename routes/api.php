@@ -47,6 +47,8 @@ Route::prefix('accounts')->group(function(){
 /* Categories */
 Route::prefix('categories')->group(function(){
     Route::get('/', 'Categories@index');
+    Route::get('/income', 'Categories@income');
+    Route::get('/expense', 'Categories@expense');
     Route::get('{id}', 'Categories@show');
     Route::post('/', 'Categories@store');
     Route::put('{id}', 'Categories@update');

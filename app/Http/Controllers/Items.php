@@ -10,9 +10,8 @@ class Items extends Controller
 {
     public function index()
     {  
-        
         return ItemResource::collection(Item::orderBy('created_at', 'DESC')->get());
-        //return Item::paginate(25);
+        // return Item::paginate(25);
     }
 
     public function show($id)

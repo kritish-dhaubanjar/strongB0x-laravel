@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class Transaction extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['type', 'paid_at', 'amount', 'account_id', 'document_id', 'contact_id', 'category_id', 'description', 'payment_method'];
+    protected $fillable = ['type', 'paid_year','paid_month','paid_day' , 'amount', 'account_id', 'document_id', 'contact_id', 'category_id', 'description', 'payment_method'];
 
     public function contact(){
         return $this->belongsTo('App\Models\Contact');
@@ -23,7 +23,4 @@ class Transaction extends Model
         return $this->belongsTo('App\Models\Account');
     }
 
-    public function getPaidAtAttribute($value) {
-        return Carbon::parse($value)->toDateString();
-    }
 }

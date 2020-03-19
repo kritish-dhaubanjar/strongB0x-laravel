@@ -39,7 +39,15 @@ class Taxes extends Controller
             'name'=>'required',
             'rate' => 'required',
         ]);
-        if(Tax::findOrFail($id)->update([
+        $tax = Tax::findOrFail($id);
+
+        if($tax->rate != $request->rate){
+            if(count($tax->invoices) > 0 || count($tax->bills) > 0){
+                return ['status' => 412];
+            }
+        }
+        
+        if($tax->update([
             'name' => $request->name,
             'rate' => $request->rate,
             'enabled'=>$request->enabled
@@ -50,7 +58,7 @@ class Taxes extends Controller
     public function destroy($id)
     {
         $tax = Tax::findOrFail($id);
-        if(count($tax->items) > 0){
+        if(count($tax->items) > 0 || count($tax->invoices) > 0 || count($tax->bills) > 0){
             return ['status' => 412];
         }
         if(Tax::findOrFail($id)->delete()){

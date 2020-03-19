@@ -26,6 +26,7 @@ class ItemResource extends JsonResource
           "quantity"=> $this->quantity,
           "unit"=> is_null($this->unit_id) ? null : Unit::findOrFail($this->unit_id)->name,
           "category"=> is_null($this->category_id) ? null : Category::findOrFail($this->category_id)->name,
+          "tax_id"=>$this->tax_id,
           "tax"=> is_null($this->tax_id) ? null : Tax::findOrFail($this->tax_id)->name,
           "enabled"=> $this->enabled == 1,
           "deleted_at"=> $this->deleted_at,

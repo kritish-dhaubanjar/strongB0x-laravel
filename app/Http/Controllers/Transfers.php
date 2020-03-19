@@ -29,12 +29,16 @@ class Transfers extends Controller
 
         DB::beginTransaction();
 
+        $date = explode("-", $request->paid_at);
+
         try{
             $transfer = Transfer::create();
 
             $expense = new Transaction([
                 'type' => 'expense',
-                'paid_at' => $request->paid_at,
+                'paid_year' => $date[0],
+                'paid_month' => $date[1],
+                'paid_day' => $date[2],
                 'amount'=> $request->amount,
                 'account_id' => $request->expense_account_id,
                 'category_id' => 5,
@@ -44,7 +48,9 @@ class Transfers extends Controller
 
             $income = new Transaction([
                 'type' => 'income',
-                'paid_at' => $request->paid_at,
+                'paid_year' => $date[0],
+                'paid_month' => $date[1],
+                'paid_day' => $date[2],
                 'amount'=> $request->amount,
                 'account_id' => $request->income_account_id,
                 'category_id' => 5,
@@ -56,7 +62,7 @@ class Transfers extends Controller
             $transfer->transactions()->save($income);
 
         }catch(Exception $e){
-            DB:rollback();
+            DB::rollback();
             throw $e;
         }
             
@@ -76,6 +82,8 @@ class Transfers extends Controller
         ]);
 
         DB::beginTransaction();
+        
+        $date = explode("-", $request->paid_at);
 
         try{
             $transfer = Transfer::findOrFail($id);
@@ -84,7 +92,9 @@ class Transfers extends Controller
 
             $expense = new Transaction([
                 'type' => 'expense',
-                'paid_at' => $request->paid_at,
+                'paid_year' => $date[0],
+                'paid_month' => $date[1],
+                'paid_day' => $date[2],
                 'amount'=> $request->amount,
                 'account_id' => $request->expense_account_id,
                 'category_id' => 5,
@@ -94,7 +104,9 @@ class Transfers extends Controller
 
             $income = new Transaction([
                 'type' => 'income',
-                'paid_at' => $request->paid_at,
+                'paid_year' => $date[0],
+                'paid_month' => $date[1],
+                'paid_day' => $date[2],
                 'amount'=> $request->amount,
                 'account_id' => $request->income_account_id,
                 'category_id' => 5,
