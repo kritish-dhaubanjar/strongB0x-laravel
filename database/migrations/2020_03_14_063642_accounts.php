@@ -27,6 +27,7 @@ class Accounts extends Migration
         });
 
         DB::table('accounts')->insert(['name'=>'Cash']);
+        DB::table('accounts')->insert(['name'=>'Bank']);
     }
 
     /**

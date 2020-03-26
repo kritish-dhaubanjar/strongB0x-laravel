@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,6 +18,12 @@ use Illuminate\Support\Facades\Route;
 /* Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });*/
+
+/* Company */
+Route::prefix('company')->group(function(){
+    Route::get('/', 'Companies@index');
+    Route::put('/', 'Companies@update');
+});
 
 /* Contact */
 Route::prefix('contacts')->group(function(){
@@ -112,4 +119,10 @@ Route::prefix('transfers')->group(function(){
     Route::delete('{id}', 'Transfers@destroy');
 });
 
+/* Dashboard */
 
+Route::prefix('statistics')->group(function(){
+    Route::get('/', "Statistics@getLifetime");
+    Route::get('/timeline/{timeline}', "Statistics@timeline");
+    Route::get('/timeline/{year}/{month}', "Statistics@monthlyTimeline");
+});
