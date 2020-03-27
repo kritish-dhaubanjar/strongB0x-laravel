@@ -6,28 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\Purchases\Bill;
 use App\Models\Sales\Invoice;
+use App\Models\Account;
 
 use App\Http\Traits\DateTrait;
 
 class Statistics extends Controller
 {
     use DateTrait;
-
-    private $months = [
-        "baishak",
-        "jestha",
-        "ashad",
-        "shrawn",
-        "bhadra",
-        "sshwin",
-        "kartik",
-        "mangshir",
-        "poush",
-        "magh",
-        "falgun",
-        "chaitra"
-      ];
-
 
     public function timeline($timeline){
 
@@ -36,6 +21,9 @@ class Statistics extends Controller
 
         $range = null;
         $latest = $this->getActiveDate();
+
+        if(is_null($latest)) return json_encode(['status'=>204]);
+        
 
         switch($timeline){
             case 'last7days':
@@ -314,5 +302,51 @@ class Statistics extends Controller
             // $var[$revenue->serial][] = $revenue->amount; 
         }
         return $var;
+    }
+
+    public function accounts(){
+        $accounts = Account::all(['id','name','opening_balance']);
+        $balance = [];
+        foreach ($accounts as $account) {
+            $expense = Transaction::where('type', 'expense')->where('account_id', $account->id)->pluck('amount')->sum();
+            $income = Transaction::where('type', 'income')->where('account_id', $account->id)->pluck('amount')->sum();
+            $balance[$account->name] = $account->opening_balance + $income - $expense;
+        }
+        return $balance;        
+    }
+
+    public function transactions(){
+        $payments = Transaction::where('type', 'expense')
+        ->whereNull('document_id')
+        ->whereNotNull('contact_id')
+        ->orderBy('paid_year', 'DESC')
+        ->orderBy('paid_month', 'DESC')
+        ->orderBy('paid_day', 'DESC') 
+        ->limit(5)
+        ->get(['paid_year AS year','paid_month AS month','paid_day AS day','amount']);
+
+        $revenues = Transaction::where('type', 'income')
+        ->whereNull('document_id')
+        // ->whereNotNull('contact_id')
+        ->orderBy('paid_year', 'DESC')
+        ->orderBy('paid_month', 'DESC')
+        ->orderBy('paid_day', 'DESC') 
+        ->limit(5)
+        ->get(['paid_year AS year','paid_month AS month','paid_day AS day','amount']);
+
+        $expenses = Transaction::where('type', 'expense')
+        ->whereNull('document_id')
+        ->whereNull('contact_id')
+        ->orderBy('paid_year', 'DESC')
+        ->orderBy('paid_month', 'DESC')
+        ->orderBy('paid_day', 'DESC') 
+        ->limit(5)
+        ->get(['paid_year AS year','paid_month AS month','paid_day AS day','amount']);
+
+        return [
+            'revenues'=>$revenues,
+            'payments'=>$payments,
+            'expenses'=>$expenses
+        ];     
     }
 }

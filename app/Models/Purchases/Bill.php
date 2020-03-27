@@ -11,7 +11,7 @@ class Bill extends Model
     use SoftDeletes;
 
     protected $fillable = ['bill_number', 'order_number', 'status', 'billed_year', 'billed_month','billed_day', 'due_year', 'due_month', 'due_day', 'amount', 'tax_id', 'category_id', 'vendor_id', 'notes'];
-    protected $appends = ['serial'];
+    protected $appends = ['serial', 'date'];
 
     public function items(){
         return $this->hasMany('App\Models\Purchases\BillItem');
@@ -44,5 +44,9 @@ class Bill extends Model
 
     public function getSerialAttribute(){
         return $this->year.$this->month.$this->day;
+    }
+
+    public function getDateAttribute(){
+        return "$this->year-$this->month-$this->day";
     }
 }

@@ -20,11 +20,13 @@ class Contacts extends Controller
         $request->validate([
             'type'=>'required',
             'name'=>'required',
+            'opening_balance'=>'required'
         ]);
 
         $contact = Contact::create([
             'type'=> $request->type,
             'name' => $request->name,
+            'opening_balance' => $request->opening_balance,
             'email' => $request->email, 
             'tax_number' => $request->tax_number, 
             'phone' => $request->phone, 
@@ -44,10 +46,12 @@ class Contacts extends Controller
         $request->validate([
             'type'=>'required',
             'name'=>'required',
+            'opening_balance'=>'required'
         ]);
         if(Contact::findOrFail($id)->update([
             'type'=> $request->type,
             'name' => $request->name,
+            'opening_balance' => $request->opening_balance,
             'email' => $request->email, 
             'tax_number' => $request->tax_number, 
             'phone' => $request->phone, 

@@ -17,6 +17,7 @@ class CreateContactsTable extends Migration
             $table->id();
             $table->enum('type', ['vendor', 'customer']);
             $table->string('name');
+            $table->double('opening_balance', 15, 2)->default('0.00');
             $table->string('email')->nullable();
             $table->string('tax_number')->nullable();
             $table->string('phone')->nullable();

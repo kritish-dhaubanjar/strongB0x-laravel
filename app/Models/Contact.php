@@ -9,7 +9,7 @@ class Contact extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['type', 'name', 'email', 'tax_number', 'phone', 'address', 'enabled'];
+    protected $fillable = ['type', 'name', 'opening_balance', 'email', 'tax_number', 'phone', 'address', 'enabled'];
 
     public function bills(){
         return $this->hasMany('App\Models\Purchases\Bill', 'vendor_id');

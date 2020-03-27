@@ -10,7 +10,7 @@ class Invoice extends Model
     use SoftDeletes;
 
     protected $fillable = ['invoice_number', 'order_number', 'status', 'invoiced_year', 'invoiced_month','invoiced_day', 'due_year', 'due_month', 'due_day', 'amount', 'tax_id', 'category_id', 'customer_id', 'notes'];
-    protected $appends = ['serial'];
+    protected $appends = ['serial', 'date'];
 
     public function items(){
         return $this->hasMany('App\Models\Sales\InvoiceItem');
@@ -43,5 +43,9 @@ class Invoice extends Model
 
     public function getSerialAttribute(){
         return $this->year.$this->month.$this->day;
+    }
+
+    public function getDateAttribute(){
+        return "$this->year-$this->month-$this->day";
     }
 }

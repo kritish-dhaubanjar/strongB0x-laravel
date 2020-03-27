@@ -125,4 +125,11 @@ Route::prefix('statistics')->group(function(){
     Route::get('/', "Statistics@getLifetime");
     Route::get('/timeline/{timeline}', "Statistics@timeline");
     Route::get('/timeline/{year}/{month}', "Statistics@monthlyTimeline");
+    Route::get('/accounts', "Statistics@accounts");
+    Route::get('/transactions', "Statistics@transactions");
+});
+
+Route::prefix('reports')->group(function(){
+    Route::get('/profit-loss/{year}', "Reports@profitLoss");
+    Route::get('/ledger/{id}', "Reports@ledger");
 });

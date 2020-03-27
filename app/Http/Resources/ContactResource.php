@@ -18,6 +18,7 @@ class ContactResource extends JsonResource
             'id'=> $this->id,
             'type'=> $this->type,
             'name' => $this->name,
+            'opening_balance' => $this->opening_balance,
             'email' => $this->email, 
             'tax_number' => $this->tax_number, 
             'phone' => $this->phone, 
