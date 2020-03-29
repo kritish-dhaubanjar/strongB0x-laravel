@@ -130,6 +130,6 @@ Route::prefix('statistics')->group(function(){
 });
 
 Route::prefix('reports')->group(function(){
-    Route::get('/profit-loss/{year}', "Reports@profitLoss");
+    Route::get('/income-expense/{year}', "Reports@profitLoss");
     Route::get('/ledger/{id}', "Reports@ledger");
 });
