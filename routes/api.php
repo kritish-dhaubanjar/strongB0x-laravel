@@ -133,3 +133,8 @@ Route::prefix('reports')->group(function(){
     Route::get('/income-expense/{year}', "Reports@profitLoss");
     Route::get('/ledger/{id}', "Reports@ledger");
 });
+
+/*Stock Count*/
+Route::prefix('stock')->group(function(){
+    Route::get('/{id}', 'Stocks@show');
+});

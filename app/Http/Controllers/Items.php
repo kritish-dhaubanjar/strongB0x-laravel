@@ -16,7 +16,7 @@ class Items extends Controller
 
     public function show($id)
     {
-        return Item::findOrFail($id);
+        return Item::with('unit:id,name','tax:id,name','category:id,name')->findOrFail($id);
     }
 
     public function store(Request $request)
