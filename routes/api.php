@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,18 +15,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/* Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
+Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+    $role = $request->user()->role;
+    return [
+        'user'=>$request->user(),
+        'role'=>$role
+    ];
+});
+
+Route::middleware(['auth:sanctum','isAdmin'])->get('/users', function (Request $request) {
+    return User::with('role')->get();
+});
 
 /* Company */
-Route::prefix('company')->group(function(){
+Route::middleware(['auth:sanctum'])->prefix('company')->group(function(){
     Route::get('/', 'Companies@index');
-    Route::put('/', 'Companies@update');
+    Route::middleware(['isAdmin'])->put('/', 'Companies@update');
 });
 
 /* Contact */
-Route::prefix('contacts')->group(function(){
+Route::middleware(['auth:sanctum'])->prefix('contacts')->group(function(){
     Route::get('{type}', 'Contacts@index');
     Route::get('show/{id}', 'Contacts@show');
     Route::post('/', 'Contacts@store');
@@ -35,7 +43,7 @@ Route::prefix('contacts')->group(function(){
 });
 
 /* Units */
-Route::prefix('units')->group(function(){
+Route::middleware(['auth:sanctum'])->prefix('units')->group(function(){
     Route::get('/', 'Units@index');
     Route::post('/', 'Units@store');
     Route::put('{id}', 'Units@update');
@@ -43,7 +51,7 @@ Route::prefix('units')->group(function(){
 });
 
 /* Accounts */
-Route::prefix('accounts')->group(function(){
+Route::middleware(['auth:sanctum'])->prefix('accounts')->group(function(){
     Route::get('/', 'Accounts@index');
     Route::get('{id}', 'Accounts@show');
     Route::post('/', 'Accounts@store');
@@ -52,8 +60,9 @@ Route::prefix('accounts')->group(function(){
 });
 
 /* Categories */
-Route::prefix('categories')->group(function(){
+Route::middleware(['auth:sanctum'])->prefix('categories')->group(function(){
     Route::get('/', 'Categories@index');
+    Route::get('/product', 'Categories@product');
     Route::get('/income', 'Categories@income');
     Route::get('/expense', 'Categories@expense');
     Route::get('{id}', 'Categories@show');
@@ -63,7 +72,7 @@ Route::prefix('categories')->group(function(){
 });
 
 /* Taxes */
-Route::prefix('taxes')->group(function(){
+Route::middleware(['auth:sanctum'])->prefix('taxes')->group(function(){
     Route::get('/', 'Taxes@index');
     Route::get('{id}', 'Taxes@show');
     Route::post('/', 'Taxes@store');
@@ -72,7 +81,7 @@ Route::prefix('taxes')->group(function(){
 });
 
 /* Items */
-Route::prefix('items')->group(function(){
+Route::middleware(['auth:sanctum'])->prefix('items')->group(function(){
     Route::get('/', 'Items@index');
     Route::get('{id}', 'Items@show');
     Route::post('/', 'Items@store');
@@ -81,7 +90,7 @@ Route::prefix('items')->group(function(){
 });
 
 /* Purchases */
-Route::prefix('purchases')->group(function(){
+Route::middleware(['auth:sanctum'])->prefix('purchases')->group(function(){
     Route::get('/', 'Purchases\Bills@index');
     Route::get('{id}', 'Purchases\Bills@show');
     Route::post('/', 'Purchases\Bills@store');
@@ -90,7 +99,7 @@ Route::prefix('purchases')->group(function(){
 });
 
 /* Sales */
-Route::prefix('sales')->group(function(){
+Route::middleware(['auth:sanctum'])->prefix('sales')->group(function(){
     Route::get('/', 'Sales\Invoices@index');
     Route::get('{id}', 'Sales\Invoices@show');
     Route::post('/', 'Sales\Invoices@store');
@@ -100,7 +109,7 @@ Route::prefix('sales')->group(function(){
 
 
 /* Transactions */
-Route::prefix('transactions')->group(function(){
+Route::middleware(['auth:sanctum'])->prefix('transactions')->group(function(){
     Route::get('/', 'Transactions@index');
     Route::get('/revenues', 'Transactions@revenues');
     Route::get('/payments', 'Transactions@payments');
@@ -111,7 +120,7 @@ Route::prefix('transactions')->group(function(){
 });
 
 /* Transfers */
-Route::prefix('transfers')->group(function(){
+Route::middleware(['auth:sanctum'])->prefix('transfers')->group(function(){
     Route::get('/', 'Transfers@index');
     Route::get('{id}', 'Transfers@show');
     Route::post('/', 'Transfers@store');
@@ -120,8 +129,7 @@ Route::prefix('transfers')->group(function(){
 });
 
 /* Dashboard */
-
-Route::prefix('statistics')->group(function(){
+Route::middleware(['auth:sanctum'])->prefix('statistics')->group(function(){
     Route::get('/', "Statistics@getLifetime");
     Route::get('/timeline/{timeline}', "Statistics@timeline");
     Route::get('/timeline/{year}/{month}', "Statistics@monthlyTimeline");
@@ -129,12 +137,20 @@ Route::prefix('statistics')->group(function(){
     Route::get('/transactions', "Statistics@transactions");
 });
 
-Route::prefix('reports')->group(function(){
+Route::middleware(['auth:sanctum'])->prefix('reports')->group(function(){
     Route::get('/income-expense/{year}', "Reports@profitLoss");
     Route::get('/ledger/{id}', "Reports@ledger");
 });
 
-/*Stock Count*/
-Route::prefix('stock')->group(function(){
+/* Stock Count */
+Route::middleware(['auth:sanctum'])->prefix('stock')->group(function(){
     Route::get('/{id}', 'Stocks@show');
 });
+
+/* Auth */
+Route::post('login', 'AuthController@login');
+Route::middleware(['auth:sanctum'])->post('logout', 'AuthController@logout');
+Route::middleware(['auth:sanctum','isAdmin'])->post('register', 'AuthController@register');
+Route::middleware(['auth:sanctum','isAdmin'])->put('user/{id}', 'AuthController@update');
+Route::middleware(['auth:sanctum','isAdmin'])->delete('user/{id}', 'AuthController@destroy');
+Route::middleware(['auth:sanctum'])->get('roles', 'AuthController@roles');

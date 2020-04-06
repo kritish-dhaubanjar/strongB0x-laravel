@@ -10,12 +10,16 @@ class Categories extends Controller
 {
     public function index()
     {  
-        return CategoryResource::collection(Category::all());
+        return CategoryResource::collection(Category::whereIn('type', ['income', 'expense', 'other'])->get());
     }
 
     public function show($id)
     {
         return new CategoryResource(Category::findOrFail($id));
+    }
+
+    public function product(){
+        return CategoryResource::collection(Category::where('type', 'item')->get());
     }
 
     public function income(){
