@@ -15,6 +15,7 @@
         "laravel/framework": "^7.0",
         "laravel/sanctum": "^2.1",
         "laravel/tinker": "^2.0",
+        "mbezhanov/faker-provider-collection": "^1.2",
         "nesbot/carbon": "^2.31"
     },
     "require-dev": {

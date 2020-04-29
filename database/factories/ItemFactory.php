@@ -7,8 +7,11 @@ use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
 $factory->define(Item::class, function (Faker $faker) {
+	$faker->addProvider(new \Bezhanov\Faker\Provider\Commerce($faker));
+
     return [
-        'name' => Str::random(16),
+        // 'name' => Str::random(16),
+        'name' => $faker->productName,
         'description' => $faker->paragraph,
         'sale_price' => $faker->numberBetween($min = 1, $max = 100),
         'purchase_price' => $faker->numberBetween($min = 1, $max = 100),
