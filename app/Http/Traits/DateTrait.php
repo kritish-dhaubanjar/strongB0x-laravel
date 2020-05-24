@@ -76,17 +76,30 @@ trait DateTrait {
         $latest_invoice_date = Invoice::orderBy('invoiced_year', 'ASC')->orderBy('invoiced_month', 'ASC')->orderBy('invoiced_day', 'ASC')->get(['invoiced_year AS year','invoiced_month AS month','invoiced_day AS day'])->first();
         $latest_transaction_date = Transaction::orderBy('paid_year', 'ASC')->orderBy('paid_month', 'ASC')->orderBy('paid_day', 'ASC')->get(['paid_year AS year','paid_month AS month','paid_day AS day'])->first();
 
-        $latest_bill_date['serial'] = $latest_bill_date['year'] . $latest_bill_date['month'] .$latest_bill_date['day'];
-        $latest_invoice_date['serial'] = $latest_invoice_date['year'] . $latest_invoice_date['month'] .$latest_invoice_date['day'];
-        $latest_transaction_date['serial'] = $latest_transaction_date['year'] . $latest_transaction_date['month'] .$latest_transaction_date['day'];
+        if($latest_bill_date){
+            $latest_bill_date['serial'] = $latest_bill_date['year'] . $latest_bill_date['month'] .$latest_bill_date['day'];
+            $latest_active_date = $latest_bill_date;
+        }
 
-        $latest_active_date = $latest_bill_date;
+        if($latest_invoice_date){
+            $latest_invoice_date['serial'] = $latest_invoice_date['year'] . $latest_invoice_date['month'] .$latest_invoice_date['day'];
+            $latest_active_date = $latest_invoice_date;
+        }
 
-        if($latest_active_date['serial'] > $latest_invoice_date['serial']){
+        if($latest_transaction_date){
+            $latest_transaction_date['serial'] = $latest_transaction_date['year'] . $latest_transaction_date['month'] .$latest_transaction_date['day'];
+            $latest_active_date = $latest_transaction_date;
+        }
+
+        if($latest_active_date['serial'] > $latest_bill_date['serial'] && $latest_bill_date){
+            $latest_active_date = $latest_invoice_date;
+        }
+
+        if($latest_active_date['serial'] > $latest_invoice_date['serial'] && $latest_invoice_date){
             $latest_active_date = $latest_invoice_date;
         }
         
-        if($latest_active_date['serial'] > $latest_transaction_date['serial']){
+        if($latest_active_date['serial'] > $latest_transaction_date['serial'] && $latest_transaction_date){
             $latest_active_date = $latest_transaction_date ;
         }
 
