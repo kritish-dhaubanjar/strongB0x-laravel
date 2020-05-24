@@ -11,6 +11,11 @@ class InvoiceItem extends Model
 
     protected $fillable = ['invoice_id', 'item_id', 'name', 'quantity', 'total','price', 'tax_id', 'tax'];
 
+    protected $casts = [
+        'item_id' => 'integer',
+        'tax_id' => 'integer'
+    ];
+
     public function invoice(){
         return $this->belongsTo('App\Models\Sales\Invoice');
     }

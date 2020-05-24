@@ -11,6 +11,11 @@ class BillItem extends Model
 
     protected $fillable = ['bill_id', 'item_id', 'name', 'quantity', 'total','price', 'tax_id', 'tax'];
 
+    protected $casts = [
+        'item_id' => 'integer',
+        'tax_id' => 'integer'
+    ];
+
     public function bill(){
         return $this->belongsTo('App\Models\Purchases\Bill');
     }
