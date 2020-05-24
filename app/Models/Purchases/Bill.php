@@ -13,6 +13,10 @@ class Bill extends Model
     protected $fillable = ['bill_number', 'order_number', 'status', 'billed_year', 'billed_month','billed_day', 'due_year', 'due_month', 'due_day', 'amount', 'tax_id', 'category_id', 'vendor_id', 'notes'];
     protected $appends = ['serial', 'date'];
 
+    protected $casts = [
+        'amount' => 'float',
+    ];
+
     public function items(){
         return $this->hasMany('App\Models\Purchases\BillItem');
     }

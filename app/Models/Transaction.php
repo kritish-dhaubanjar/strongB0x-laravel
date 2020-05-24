@@ -13,6 +13,10 @@ class Transaction extends Model
 
     protected $appends = ['serial','date'];
 
+    protected $casts = [
+        'amount' => 'float',
+    ];
+
     public function contact(){
         return $this->belongsTo('App\Models\Contact');
     }

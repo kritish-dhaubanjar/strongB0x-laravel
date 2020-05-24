@@ -12,6 +12,10 @@ class Invoice extends Model
     protected $fillable = ['invoice_number', 'order_number', 'status', 'invoiced_year', 'invoiced_month','invoiced_day', 'due_year', 'due_month', 'due_day', 'amount', 'tax_id', 'category_id', 'customer_id', 'notes'];
     protected $appends = ['serial', 'date'];
 
+    protected $casts = [
+        'amount' => 'float',
+    ];
+
     public function items(){
         return $this->hasMany('App\Models\Sales\InvoiceItem');
     }
