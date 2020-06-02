@@ -25,7 +25,7 @@ class TransactionResource extends JsonResource
             'amount' => $this->amount,
             'account_id' => (int)$this->account_id,
             'account' => Account::findOrFail($this->account_id)->name,
-            'contact_id' => (int)$this->contact_id,
+            'contact_id' => is_null($this->contact_id) ? null: (int)$this->contact_id,
             'contact_name' => is_null($this->contact_id) ? null : Contact::findOrFail($this->contact_id)->name,
             'category_id' => (int)$this->category_id,
             'category' => Category::findOrFail($this->category_id)->name,
