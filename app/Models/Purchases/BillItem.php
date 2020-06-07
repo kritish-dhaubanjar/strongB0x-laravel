@@ -13,7 +13,6 @@ class BillItem extends Model
 
     protected $casts = [
         'item_id' => 'integer',
-        'tax_id' => 'integer',
         'bill_id' => 'integer'
     ];
 
