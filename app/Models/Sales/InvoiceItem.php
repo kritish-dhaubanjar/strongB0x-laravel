@@ -13,7 +13,8 @@ class InvoiceItem extends Model
 
     protected $casts = [
         'item_id' => 'integer',
-        'tax_id' => 'integer'
+        'tax_id' => 'integer',
+        'invoice_id' => 'integer'
     ];
 
     public function invoice(){

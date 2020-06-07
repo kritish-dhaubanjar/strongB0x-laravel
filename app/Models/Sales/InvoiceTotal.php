@@ -10,6 +10,10 @@ class InvoiceTotal extends Model
     use SoftDeletes;
 
     protected $fillable = ['invoice_id', 'code', 'amount'];
+
+    protected $casts = [
+        'invoice_id' => 'integer'
+    ];
     
     public function invoice(){
         return $this->belongsTo('App\Models\Sales\Invoice');
