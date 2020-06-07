@@ -54,17 +54,30 @@ trait DateTrait {
         if (is_null($latest_bill_date) && is_null($latest_invoice_date) && is_null($latest_transaction_date))
             return null;
 
-        $latest_bill_date['serial'] = $latest_bill_date['year'] . $latest_bill_date['month'] .$latest_bill_date['day'];
-        $latest_invoice_date['serial'] = $latest_invoice_date['year'] . $latest_invoice_date['month'] .$latest_invoice_date['day'];
-        $latest_transaction_date['serial'] = $latest_transaction_date['year'] . $latest_transaction_date['month'] .$latest_transaction_date['day'];
+        if($latest_bill_date){
+            $latest_bill_date['serial'] = $latest_bill_date['year'] . $latest_bill_date['month'] .$latest_bill_date['day'];
+            $latest_active_date = $latest_bill_date;
+        }
 
-        $latest_active_date = $latest_bill_date;
+        if($latest_invoice_date){
+            $latest_invoice_date['serial'] = $latest_invoice_date['year'] . $latest_invoice_date['month'] .$latest_invoice_date['day'];
+            $latest_active_date = $latest_invoice_date;
+        }
 
-        if($latest_active_date['serial'] < $latest_invoice_date['serial']){
+        if($latest_transaction_date){
+            $latest_transaction_date['serial'] = $latest_transaction_date['year'] . $latest_transaction_date['month'] .$latest_transaction_date['day'];
+            $latest_active_date = $latest_transaction_date;
+        }
+
+        if($latest_bill_date && $latest_active_date['serial'] < $latest_bill_date['serial']){
+            $latest_active_date = $latest_invoice_date;
+        }
+
+        if($latest_invoice_date && $latest_active_date['serial'] < $latest_invoice_date['serial']){
             $latest_active_date = $latest_invoice_date;
         }
         
-        if($latest_active_date['serial'] < $latest_transaction_date['serial']){
+        if($latest_transaction_date && $latest_active_date['serial'] < $latest_transaction_date['serial'] ){
             $latest_active_date = $latest_transaction_date ;
         }
 
@@ -91,15 +104,15 @@ trait DateTrait {
             $latest_active_date = $latest_transaction_date;
         }
 
-        if($latest_active_date['serial'] > $latest_bill_date['serial'] && $latest_bill_date){
+        if($latest_bill_date && $latest_active_date['serial'] > $latest_bill_date['serial']){
             $latest_active_date = $latest_invoice_date;
         }
 
-        if($latest_active_date['serial'] > $latest_invoice_date['serial'] && $latest_invoice_date){
+        if($latest_invoice_date && $latest_active_date['serial'] > $latest_invoice_date['serial']){
             $latest_active_date = $latest_invoice_date;
         }
         
-        if($latest_active_date['serial'] > $latest_transaction_date['serial'] && $latest_transaction_date){
+        if($latest_transaction_date && $latest_active_date['serial'] > $latest_transaction_date['serial'] ){
             $latest_active_date = $latest_transaction_date ;
         }
 
