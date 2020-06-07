@@ -14,7 +14,7 @@ class Item extends Model
     protected $casts = [
         'tax_id' => 'int',
         'category_id' => 'int',
-        'unit_id' => 'int'
+        'unit_id' => 'int',
     ];
 
     public function unit(){
