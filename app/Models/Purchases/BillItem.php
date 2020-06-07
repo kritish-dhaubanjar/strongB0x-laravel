@@ -12,8 +12,9 @@ class BillItem extends Model
     protected $fillable = ['bill_id', 'item_id', 'name', 'quantity', 'total','price', 'tax_id', 'tax'];
 
     protected $casts = [
-        'item_id' => 'integer',
-        'bill_id' => 'integer'
+        'item_id' => 'int',
+        'bill_id' => 'int',
+        'tax_id' => 'int'
     ];
 
     public function bill(){
