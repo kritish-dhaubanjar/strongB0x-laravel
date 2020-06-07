@@ -15,6 +15,9 @@ class Transaction extends Model
 
     protected $casts = [
         'amount' => 'float',
+        'account_id' => 'int',
+        'contact_id' => 'int',
+        'category_id' => 'int'
     ];
 
     public function contact(){

@@ -14,6 +14,9 @@ class Invoice extends Model
 
     protected $casts = [
         'amount' => 'float',
+        'tax_id' => 'int',
+        'customer_id' => 'int',
+        'category_id' => 'int',
     ];
 
     public function items(){

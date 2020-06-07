@@ -12,8 +12,9 @@ class InvoiceItem extends Model
     protected $fillable = ['invoice_id', 'item_id', 'name', 'quantity', 'total','price', 'tax_id', 'tax'];
 
     protected $casts = [
-        'item_id' => 'integer',
-        'tax_id' => 'integer',
+        'item_id' => 'int',
+        'invoice_id' => 'int',
+        'tax_id' => 'int'
     ];
 
     public function invoice(){

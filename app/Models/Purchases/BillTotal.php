@@ -11,6 +11,10 @@ class BillTotal extends Model
 
     protected $fillable = ['bill_id', 'code', 'amount'];
     
+    protected $casts = [
+        'bill_id' => 'int',
+    ];
+
     public function bill(){
         return $this->belongsTo('App\Models\Purchases\Bill');
     }

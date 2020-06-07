@@ -15,6 +15,9 @@ class Bill extends Model
 
     protected $casts = [
         'amount' => 'float',
+        'tax_id' => 'int',
+        'vendor_id' => 'int',
+        'category_id' => 'int',
     ];
 
     public function items(){
