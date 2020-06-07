@@ -10,10 +10,6 @@ class BillTotal extends Model
     use SoftDeletes;
 
     protected $fillable = ['bill_id', 'code', 'amount'];
-
-    protected $casts = [
-        'bill_id' => 'integer'
-    ];
     
     public function bill(){
         return $this->belongsTo('App\Models\Purchases\Bill');

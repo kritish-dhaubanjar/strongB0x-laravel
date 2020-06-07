@@ -36,7 +36,7 @@ class InvoiceResource extends JsonResource
             'order_number'=>$this->order_number,
             'items'=>$this->items,
             'discount'=>$discount,
-            'tax_id'=>(int)$this->tax_id,
+            'tax_id'=> is_null($this->tax_id) ? null : (int) $this->tax_id,
             'notes'=>$this->notes,
         ];
     }
