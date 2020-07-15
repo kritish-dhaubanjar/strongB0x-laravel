@@ -29,7 +29,8 @@ class Invoices extends Controller
             'invoice_number'=> 'required',
             'items' => 'present|array|min:1',
             'items.*.id' => 'required',
-            'items.*.quantity' => 'required|numeric|gt:0',
+            // 'items.*.quantity' => 'required|numeric|gt:0',
+            'items.*.quantity' => 'required|numeric',
             'items.*.price' => 'required|numeric|gt:0'
         ]);
 
@@ -140,7 +141,8 @@ class Invoices extends Controller
             'items' => 'present|array|min:1',
             // id != item_id
             'items.*.item_id' => 'required',
-            'items.*.quantity' => 'required|numeric|gt:0',
+            // 'items.*.quantity' => 'required|numeric|gt:0',
+            'items.*.quantity' => 'required|numeric',
             'items.*.price' => 'required|numeric|gt:0'
         ]);
 
