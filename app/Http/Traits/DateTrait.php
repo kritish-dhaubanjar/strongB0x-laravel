@@ -37,7 +37,7 @@ trait DateTrait {
         "ashad",
         "shrawn",
         "bhadra",
-        "sshwin",
+        "ashwin",
         "kartik",
         "mangshir",
         "poush",
